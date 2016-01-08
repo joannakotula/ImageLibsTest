@@ -16,7 +16,7 @@ public:
     
     virtual ~Tester(){}
     
-    virtual void runTests(std::string imagesFolder) = 0;
+    virtual void runTests(const char* imagesFolder) = 0;
 };
 
 #endif	/* TESTER_HPP */
