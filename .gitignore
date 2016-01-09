@@ -1,6 +1,6 @@
 /nbproject/
 /build/
-/tester
+/tester-*
 *.o
 /.dep.inc
 /out
