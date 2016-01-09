@@ -25,8 +25,11 @@ ImageData* ImageLibrary::loadImageFromFile(const char* filename) {
 }
 
 void ImageLibrary::cropImage(ImageData& data, CropDataPercent crop) {
-    Magick::Geometry g(crop.width, crop.height, crop.offX, crop.offY);
-    g.percent(true);
+    Magick::Geometry g = data.image.size();
+    g.xOff(g.width() * crop.offX / 100);
+    g.yOff(g.height() * crop.offY / 100);
+    g.width(g.width() * crop.width / 100);
+    g.height(g.height() * crop.height / 100);
     data.image.crop(g);
 }
 
