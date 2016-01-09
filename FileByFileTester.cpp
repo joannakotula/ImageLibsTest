@@ -14,11 +14,13 @@
 void FileByFileTester::runTests(const char* imagesFolder) {
     DIR *dir;
     struct dirent *ent;
+    char buffer[512];
     if ((dir = opendir(imagesFolder)) != NULL) {
         /* print all the files and directories within directory */
         while ((ent = readdir(dir)) != NULL) {
             if(ent->d_type == DT_REG){
-                this->runForFile(ent->d_name);
+                sprintf(buffer, "%s/%s", imagesFolder, ent->d_name);
+                this->runForFile(buffer);
             }
         }
         closedir(dir);
