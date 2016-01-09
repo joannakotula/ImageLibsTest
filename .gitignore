@@ -3,3 +3,4 @@
 /tester
 *.o
 /.dep.inc
+/out

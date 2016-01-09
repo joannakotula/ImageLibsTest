@@ -17,10 +17,10 @@ public:
         {}
     virtual ~FileByFileTester(){}
 
-    virtual void runTests(const char* imagesFolder);
+    virtual void runTests(const char* imagesFolder, const char* outputFolder);
 
 protected:
-    virtual void runForFile(const char* filename) = 0;
+    virtual void runForFile(const char* filename, const char* outfile) = 0;
 
 private:
     FileByFileTester(const FileByFileTester& orig) = delete;

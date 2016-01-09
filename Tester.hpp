@@ -17,7 +17,7 @@ public:
         {}
     
     virtual ~Tester(){}
-    virtual void runTests(const char* imagesFolder) = 0;
+    virtual void runTests(const char* imagesFolder, const char* outputFolder) = 0;
 
 private:
     Tester(const Tester& orig) = delete;

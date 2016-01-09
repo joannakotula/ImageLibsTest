@@ -37,6 +37,15 @@ void ImageLibrary::scaleDown(ImageData& data, int scale) {
     data.image.scale(g);
 }
 
+void ImageLibrary::deleteImage(ImageData* data) {
+    delete data;
+}
+
+void ImageLibrary::saveToFile(ImageData& data, const char* outputfile) {
+    data.image.write(outputfile);
+}
+
+
 void ImageLibrary::close() {
 }
 

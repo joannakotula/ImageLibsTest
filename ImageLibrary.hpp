@@ -36,6 +36,8 @@ public:
     ImageData* loadImageFromFile(const char* filename);
     void cropImage(ImageData&, CropDataPercent);
     void scaleDown(ImageData&, int scale);
+    void saveToFile(ImageData&, const char* outputfile);
+    void deleteImage(ImageData*);
 private:
     void init(const char* programName);
     void close();

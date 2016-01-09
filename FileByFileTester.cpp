@@ -11,16 +11,18 @@
 
 #include "FileByFileTester.hpp"
 
-void FileByFileTester::runTests(const char* imagesFolder) {
+void FileByFileTester::runTests(const char* imagesFolder, const char* outputFolder) {
     DIR *dir;
     struct dirent *ent;
-    char buffer[512];
+    char inbuf[512], outbuf[512];
+    
     if ((dir = opendir(imagesFolder)) != NULL) {
         /* print all the files and directories within directory */
         while ((ent = readdir(dir)) != NULL) {
             if(ent->d_type == DT_REG){
-                sprintf(buffer, "%s/%s", imagesFolder, ent->d_name);
-                this->runForFile(buffer);
+                sprintf(inbuf, "%s/%s", imagesFolder, ent->d_name);
+                sprintf(outbuf, "%s/%s", outputFolder, ent->d_name);
+                this->runForFile(inbuf, outbuf);
             }
         }
         closedir(dir);
