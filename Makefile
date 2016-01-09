@@ -1,26 +1,32 @@
 TARGET = tester
 
-DEFAULT_FLAGS= -Wall -Wextra -Iinclude -g 
+BUILD_DIR=.bin
+SRC_DIR=src
+INCLUDE_DIR=include
+
+DEFAULT_FLAGS= -Wall -Wextra -I$(INCLUDE_DIR) -g 
 MAGICK_FLAGS=-I/usr/include/ImageMagick/
 
 CXXFLAGS = -std=c++0x -Werror -fno-strict-aliasing 
 #-D_LARGEFILE64_SOURCE=1 -D_FILE_OFFSET_BITS=64 
 
-BIN_DIR = .bin/
 CC = g++
 MAGICK_LIBS = -lpthread -lMagick++ -lMagickWand -lMagickCore 
-OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
 
-all: $(TARGET)
+all: $(BUILD_DIR) $(TARGET)
 	
-%.o: %.cpp %.hpp
+$(BUILD_DIR):
+	mkdir $(BUILD_DIR)
+	
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDE_DIR)/%.hpp
 	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS) $(MAGICK_FLAGS)
 	
-%.o: %.cpp 
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp 
 	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS) $(MAGICK_FLAGS)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(BUILD_DIR) $(OBJS)
 	$(CC) $(CXXFLAGS) $(DEFAULT_FLAGS) -o $(TARGET) $(OBJS) $(LIBS) $(MAGICK_LIBS)
 	
 clean:
-	rm *.o $(TARGET) || true
+	rm -rf $(BUILD_DIR) $(TARGET) || true
