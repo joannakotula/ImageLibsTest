@@ -14,13 +14,13 @@ OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 all: $(TARGET)
 	
 %.o: %.cpp %.hpp
-	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS)
+	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS) $(MAGICK_FLAGS)
 	
 %.o: %.cpp 
-	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS)
+	$(CC) -c -o $@ $< $(CXXFLAGS) $(DEFAULT_FLAGS) $(MAGICK_FLAGS)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CXXFLAGS) $(DEFAULT_FLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CC) $(CXXFLAGS) $(DEFAULT_FLAGS) -o $(TARGET) $(OBJS) $(LIBS) $(MAGICK_LIBS)
 	
 clean:
 	rm *.o $(TARGET) || true

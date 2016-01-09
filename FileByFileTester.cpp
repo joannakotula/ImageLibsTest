@@ -17,7 +17,9 @@ void FileByFileTester::runTests(const char* imagesFolder) {
     if ((dir = opendir(imagesFolder)) != NULL) {
         /* print all the files and directories within directory */
         while ((ent = readdir(dir)) != NULL) {
-            printf("%s\n", ent->d_name);
+            if(ent->d_type == DT_REG){
+                this->runForFile(ent->d_name);
+            }
         }
         closedir(dir);
     } else {

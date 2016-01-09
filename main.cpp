@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 #include "FileByFileTester.hpp"
+#include "ResizeAndCropTester.hpp"
 
 using namespace std;
 
@@ -21,7 +22,8 @@ int main(int argc, char** argv) {
         printf("usage: %s <path to images> [<outputpath> = out]\n", argv[0]);
         return 1;
     }
-    FileByFileTester* tester = new FileByFileTester();
+    CropDataPercent cropData(50, 50, 25, 25);
+    ResizeAndCropTester* tester = new ResizeAndCropTester(argv[0], cropData, 2);
     
     tester->runTests(argv[1]);
     

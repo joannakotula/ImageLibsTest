@@ -8,15 +8,22 @@
 #ifndef TESTER_HPP
 #define	TESTER_HPP
 
+#include "ImageLibrary.hpp"
+
 class Tester {
 public:
-    Tester(){}
-        
-    Tester(const Tester& orig) = delete;
+    Tester(const char* programName)
+        : library(programName)
+        {}
     
     virtual ~Tester(){}
-    
     virtual void runTests(const char* imagesFolder) = 0;
+
+private:
+    Tester(const Tester& orig) = delete;
+    
+protected:
+    ImageLibrary library;
 };
 
 #endif	/* TESTER_HPP */

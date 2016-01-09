@@ -12,14 +12,18 @@
 
 class FileByFileTester : public Tester {
 public:
-    FileByFileTester(){}
-    FileByFileTester(const FileByFileTester& orig) = delete;
+    FileByFileTester(const char* programName)
+        : Tester(programName)
+        {}
     virtual ~FileByFileTester(){}
 
     virtual void runTests(const char* imagesFolder);
 
-private:
+protected:
+    virtual void runForFile(const char* filename) = 0;
 
+private:
+    FileByFileTester(const FileByFileTester& orig) = delete;
 };
 
 #endif	/* FILEBYFILETESTER_HPP */
