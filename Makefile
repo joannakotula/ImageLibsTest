@@ -13,13 +13,20 @@ CC = g++
 MAGICK_FLAGS=-I/usr/include/ImageMagick/
 MAGICK_LIBS = -lpthread -lMagick++ -lMagickWand -lMagickCore 
 
+OPENCV_FLAGS=-I/usr/local/include/
+OPENCV_LIBS= -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs
+
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
 
-all: $(TARGET)-magick
+all: $(TARGET)-magick $(TARGET)-opencv
 	
 $(TARGET)-magick: TARGET_LIBS = $(MAGICK_LIBS)
 
 %-magick.o: TARGET_FLAGS = $(MAGICK_FLAGS)
+	
+$(TARGET)-opencv: TARGET_LIBS = $(OPENCV_LIBS)
+
+%-opencv.o: TARGET_FLAGS = $(OPENCV_FLAGS)
 	
 $(BUILD_DIR)/ImageLibrary-%.o: $(SRC_DIR)/%/ImageLibrary.cpp $(INCLUDE_DIR)/ImageLibrary.hpp
 	mkdir -p $(BUILD_DIR)
