@@ -16,9 +16,12 @@ MAGICK_LIBS = -lpthread -lMagick++ -lMagickWand -lMagickCore
 OPENCV_FLAGS=-I/usr/local/include/
 OPENCV_LIBS= -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs
 
+VIPS_FLAGS=$(shell pkg-config vips-cpp --cflags)
+VIPS_LIBS=$(shell pkg-config vips-cpp --libs)
+
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
 
-all: $(TARGET)-magick $(TARGET)-opencv
+all: $(TARGET)-magick $(TARGET)-opencv $(TARGET)-vips
 	
 $(TARGET)-magick: TARGET_LIBS = $(MAGICK_LIBS)
 
@@ -27,6 +30,11 @@ $(TARGET)-magick: TARGET_LIBS = $(MAGICK_LIBS)
 $(TARGET)-opencv: TARGET_LIBS = $(OPENCV_LIBS)
 
 %-opencv.o: TARGET_FLAGS = $(OPENCV_FLAGS)
+	
+$(TARGET)-vips: TARGET_LIBS = $(VIPS_LIBS)
+
+%-vips.o: TARGET_FLAGS = $(VIPS_FLAGS)
+
 	
 $(BUILD_DIR)/ImageLibrary-%.o: $(SRC_DIR)/%/ImageLibrary.cpp $(INCLUDE_DIR)/ImageLibrary.hpp
 	mkdir -p $(BUILD_DIR)
