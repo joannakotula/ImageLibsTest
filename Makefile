@@ -19,10 +19,18 @@ OPENCV_LIBS= -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs
 VIPS_FLAGS=$(shell pkg-config vips-cpp --cflags)
 VIPS_LIBS=$(shell pkg-config vips-cpp --libs)
 
+X11PATH      = /usr/X11R6
+CIMG_FLAGS=-I$(X11PATH)/include
+CIMG_LIBS=-L$(X11PATH)/lib -lpthread -lX11
+
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
 
-all: $(TARGET)-magick $(TARGET)-opencv $(TARGET)-vips
+
+
+all: $(TARGET)-magick $(TARGET)-opencv $(TARGET)-vips $(TARGET)-cimg
 	
+
+
 $(TARGET)-magick: TARGET_LIBS = $(MAGICK_LIBS)
 
 %-magick.o: TARGET_FLAGS = $(MAGICK_FLAGS)
@@ -34,6 +42,10 @@ $(TARGET)-opencv: TARGET_LIBS = $(OPENCV_LIBS)
 $(TARGET)-vips: TARGET_LIBS = $(VIPS_LIBS)
 
 %-vips.o: TARGET_FLAGS = $(VIPS_FLAGS)
+
+$(TARGET)-cimg: TARGET_LIBS = $(CIMG_LIBS)
+
+%-cimg.o: TARGET_FLAGS = $(CIMG_FLAGS)
 
 	
 $(BUILD_DIR)/ImageLibrary-%.o: $(SRC_DIR)/%/ImageLibrary.cpp $(INCLUDE_DIR)/ImageLibrary.hpp
