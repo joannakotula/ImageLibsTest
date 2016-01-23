@@ -23,11 +23,14 @@ X11PATH      = /usr/X11R6
 CIMG_FLAGS=-I$(X11PATH)/include
 CIMG_LIBS=-L$(X11PATH)/lib -lpthread -lX11
 
+FREEIMAGE_FLAGS=
+FREEIMAGE_LIBS=-lfreeimageplus
+
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
 
 
 
-all: $(TARGET)-magick $(TARGET)-opencv $(TARGET)-vips $(TARGET)-cimg
+all: $(TARGET)-magick $(TARGET)-opencv $(TARGET)-vips $(TARGET)-cimg $(TARGET)-freeimage
 	
 
 
@@ -46,6 +49,10 @@ $(TARGET)-vips: TARGET_LIBS = $(VIPS_LIBS)
 $(TARGET)-cimg: TARGET_LIBS = $(CIMG_LIBS)
 
 %-cimg.o: TARGET_FLAGS = $(CIMG_FLAGS)
+	
+$(TARGET)-freeimage: TARGET_LIBS = $(FREEIMAGE_LIBS)
+
+%-freeimage.o: TARGET_FLAGS = $(FREEIMAGE_FLAGS)
 
 	
 $(BUILD_DIR)/ImageLibrary-%.o: $(SRC_DIR)/%/ImageLibrary.cpp $(INCLUDE_DIR)/ImageLibrary.hpp
