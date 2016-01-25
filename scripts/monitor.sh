@@ -142,8 +142,8 @@ program=$1; shift
 for i in `seq $nc`; do
   sync
   sudo bash -c "echo 3 > /proc/sys/vm/drop_caches"
-  tmp=`mktemp /tmp/mojtmp.XXXXXX`
-  log=`mktemp $program.log.XXXXXX`
+  tmp=`mktemp /tmp/monitortmp.XXXXXX`
+  log=`mktemp /tmp/$program.log.XXXXXX`
   /usr/bin/time -f "%e %U %S" -o $tmp $program $* >$log &
 
   #pid - time pid
