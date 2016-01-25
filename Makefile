@@ -4,7 +4,9 @@ BUILD_DIR=.bin
 SRC_DIR=src
 INCLUDE_DIR=include
 
-DEFAULT_FLAGS= -Wall -Wextra -I$(INCLUDE_DIR) -g 
+DEBUG_FLAGS=-g
+RELEASE_FLAGS=-DNODEBUG -O2 -Wl,-s
+DEFAULT_FLAGS= -Wall -Wextra -I$(INCLUDE_DIR) $(RELEASE_FLAGS)
 
 CXXFLAGS = -std=c++0x -Werror -fno-strict-aliasing 
 #-D_LARGEFILE64_SOURCE=1 -D_FILE_OFFSET_BITS=64 
