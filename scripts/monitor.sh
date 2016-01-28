@@ -144,7 +144,7 @@ for i in `seq $nc`; do
   sudo bash -c "echo 3 > /proc/sys/vm/drop_caches"
   tmp=`mktemp /tmp/monitortmp.XXXXXX`
   log=`mktemp /tmp/$program.log.XXXXXX`
-  /usr/bin/time -f "%e %U %S" -o $tmp $program $* >$log &
+  /usr/bin/time -f "%e %U %S" -o $tmp $program $* >$log 2>$log &
 
   #pid - time pid
   #progpid - program pid
