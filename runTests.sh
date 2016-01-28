@@ -1,12 +1,13 @@
 #!/bin/bash
 
-LIBRARIES="magick opencv"
+LIBRARIES="cimg freeimage magick opencv vips"
 RESOURCES=resources
 OUTPUT_FOLDER=out
 
 MONITOR=./scripts/monitor.sh
 
 CSV_FORMAT="%tm,%tM,%ta,%td,%Tm,%TM,%Ta,%Td,%mm,%mM,%ma,%md\n"
+CSV_HEADER="library,size,min time,max time,avg time,time stdev,CPU time min,CPU time max,CPU time avg,CPU time stdev,memory min,memory max,memory avg,memory stdev"
 
 format=default
 
@@ -31,7 +32,6 @@ function getFormatOption(){
     default)
       return;;
     csv)
-      format=csv
       echo "-f $CSV_FORMAT";
       ;;
     *) wrongUsage "Unknown format: $1";
@@ -50,7 +50,8 @@ do
  case $option in
   v) monitorOptions="$monitorOptions -v";; 
   c) monitorOptions="$monitorOptions -c $OPTARG";;
-  f) formatOpt=`getFormatOption $OPTARG` 
+  f) formatOpt=`getFormatOption $OPTARG`
+     format=$OPTARG 
      monitorOptions="$monitorOptions $formatOpt";;
   ?) wrongUsage "Unknown option";;
  esac
@@ -62,10 +63,13 @@ rm -rf $OUTPUT_FOLDER/*
 for folder in $RESOURCES/*; do
     if [ -d $folder ]; then
     	echo $folder:
+      if [[ $format = csv ]]; then
+        echo $CSV_HEADER
+      fi
     	for lib in $LIBRARIES; do
         size=`ls -oh tester-$lib | sed -e "s/\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+.*/\4/"`
-        if [[ '$format' = 'csv' ]]; then
-          echo -n "$lib,$size";
+        if [[ $format = csv ]]; then
+          echo -n "$lib,$size,";
         else
           echo "  $lib"
           echo "    size: $size"
