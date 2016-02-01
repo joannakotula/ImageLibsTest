@@ -6,7 +6,7 @@ OUTPUT_FOLDER=out
 
 MONITOR=./scripts/monitor.sh
 
-CSV_FORMAT="%avgM, %minM, %maxM, %avgP, %minP, %maxP, %avgW, %minW, %maxW, %avgS, %minS, %maxS, %avgU, %minU, %maxU, %avgA, %minA, %maxA, %avgT, %minT, %maxT, %avgC, %minC, %maxC, %avgI, %minI, %maxI, %avgO, %minO, %maxO"
+CSV_FORMAT="%avgM,%minM,%maxM,%avgP,%minP,%maxP,%avgW,%minW,%maxW,%avgS,%minS,%maxS,%avgU,%minU,%maxU,%avgA,%minA,%maxA,%avgT,%minT,%maxT,%avgC,%minC,%maxC,%avgI,%minI,%maxI,%avgO,%minO,%maxO"
 CSV_HEADER="library,size,avg memory,min memory,max memory, avg major page faults, min major page faults, max major page faults, avg swapped times, min swapped times, max swapped times, avg system cpu time, min system cpu time, max system cpu time, avg user cpu time, min user cpu time, max user cpu time, avg total cpu time, min total cpu time, max total cpu time, avg real time, min real time, max real time, avg cpu percent, min cpu percent, max cpu percent, avg file inputs, min file inputs, max file inputs, avg file outputs, min file outputs, max file outputs"
 
 format=default
@@ -60,6 +60,8 @@ do
  esac
 done
 
+sudo ls > /dev/null # I don't want to print password prompt where should be results (distroys formatting)
+
 mkdir -p $OUTPUT_FOLDER
 rm -rf $OUTPUT_FOLDER/*
 
@@ -70,16 +72,16 @@ for folder in $RESOURCES/*; do
         echo $CSV_HEADER
       fi
     	for lib in $LIBRARIES; do
-        size=`ls -oh tester-$lib | sed -e "s/\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+.*/\4/"`
-        if [[ $format = csv ]]; then
-          echo -n "$lib,$size,";
-        else
-          echo "  $lib"
-          echo "    size: $size"
-        fi
-    		out=$OUTPUT_FOLDER/`basename $folder`/$lib/
-    		mkdir -p $out
-    		$MONITOR $monitorOptions -o $out/result.csv ./tester-$lib $folder $out
+            size=`ls -oh tester-$lib | sed -e "s/\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+\([^ ]\+\) \+.*/\4/"`
+            if [[ $format = csv ]]; then
+              echo -n "$lib,$size,";
+            else
+              echo "  $lib"
+              echo "    size: $size"
+            fi
+            out=$OUTPUT_FOLDER/`basename $folder`/$lib/
+            mkdir -p $out
+            $MONITOR $monitorOptions -o $out/result.csv ./tester-$lib $folder $out
     	done
     fi
 done

@@ -4,10 +4,10 @@
 function fill(key, value){
 	total[key] += value
 	if (minArr[key] == "" || minArr[key] > value) {
-		minArr[key] = int(value)
+		minArr[key] = 0 + value
 	}
 	if (maxArr[key] == "" || maxArr[key] < value){
-		maxArr[key] = int(value)
+		maxArr[key] = 0 + value
 	}
 }
 

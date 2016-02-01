@@ -48,7 +48,7 @@ if [[ $1 = 'help' ]]; then
 fi
 
 #Reading options:
-while getopts vf:c:o: option 
+while getopts vf:c:o:d option 
 do 
  case $option in
   v) time_opts="$time_opts -v";; 
