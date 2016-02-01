@@ -10,11 +10,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "FileByFileTester.hpp"
-#include "ResizeAndCropTester.hpp"
+#include "FileByFileFunctionTester.hpp"
 
 using namespace std;
 
+void runForFile(const char* filename, const char*, ImageLibrary& library){
+    CropDataPercent cropData(50, 50, 25, 25);
+    ImageData* data = library.loadImageFromFile(filename);
+    library.scaleDown(*data, 2);
+    library.cropImage(*data, cropData);
+    library.deleteImage(data);
+}
 
 /*
  * 
@@ -24,8 +30,7 @@ int main(int argc, char** argv) {
         printf("usage: %s <path to images> [<outputpath> = out]\n", argv[0]);
         return 1;
     }
-    CropDataPercent cropData(50, 50, 25, 25);
-    ResizeAndCropTester* tester = new ResizeAndCropTester(argv[0], cropData, 2);
+    FileByFileFunctionTester* tester = new FileByFileFunctionTester(argv[0], runForFile);
     
     const char* output = argc > 2 ? argv[2] : "out";
     
