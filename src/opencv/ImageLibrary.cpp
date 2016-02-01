@@ -45,6 +45,11 @@ void ImageLibrary::saveToFile(ImageData& data, const char* outputfile) {
     cv::imwrite(outputfile, data.image);
 }
 
+ImageData* ImageLibrary::copy(const ImageData& data){
+    ImageData* copy = new ImageData();
+    copy->image = data.image;
+    return copy;
+}
 
 void ImageLibrary::close() {
 }

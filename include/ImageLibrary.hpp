@@ -13,7 +13,8 @@ class ImageData;
 struct CropDataPercent {
     int width, height;
     int offX, offY;
-    
+
+    CropDataPercent() = default;
     CropDataPercent(int width, int height, int offX, int offY) 
         : width(width)
         , height(height)
@@ -34,6 +35,7 @@ public:
     };
     
     ImageData* loadImageFromFile(const char* filename);
+    ImageData* copy(const ImageData& data);
     void cropImage(ImageData&, CropDataPercent);
     void scaleDown(ImageData&, int scale);
     void saveToFile(ImageData&, const char* outputfile);

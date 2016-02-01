@@ -45,6 +45,12 @@ void ImageLibrary::deleteImage(ImageData* data){
     delete data;
 }
 
+ImageData* ImageLibrary::copy(const ImageData& data){
+    ImageData* copy = new ImageData();
+    copy->image = data.image;
+    return copy;
+}
+
 void ImageLibrary::close(){
     
 }

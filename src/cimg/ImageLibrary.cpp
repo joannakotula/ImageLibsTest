@@ -17,6 +17,10 @@ public:
             : image(filename)
             {}
             
+    ImageData(const CImg<unsigned char> image)
+            : image(image)
+            {}
+            
     CImg<unsigned char> image;
 };
 
@@ -52,6 +56,9 @@ void ImageLibrary::saveToFile(ImageData& data, const char* outputfile) {
     data.image.save(outputfile);
 }
 
+ImageData* ImageLibrary::copy(const ImageData& data){
+    return new ImageData(data.image);
+}
 
 void ImageLibrary::close() {
 }
