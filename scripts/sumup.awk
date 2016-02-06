@@ -2,12 +2,13 @@
 
 
 function fill(key, value){
+	value = 0 + value
 	total[key] += value
 	if (minArr[key] == "" || minArr[key] > value) {
-		minArr[key] = 0 + value
+		minArr[key] = value
 	}
 	if (maxArr[key] == "" || maxArr[key] < value){
-		maxArr[key] = 0 + value
+		maxArr[key] = value
 	}
 }
 
